@@ -50,24 +50,6 @@ export default function Configuracion() {
           </span>
         </label>
       </div>
-
-      {/* Tema */}
-      <div className="mb-6 flex items-center space-x-3">
-        {tema === 'light' ? (
-          <Sun className="text-xl text-yellow-500" />
-        ) : (
-          <Moon className="text-xl text-gray-300" />
-        )}
-        <select
-          value={tema}
-          onChange={(e) => setTema(e.target.value)}
-          className="border p-2 rounded"
-        >
-          <option value="light">Modo Claro</option>
-          <option value="dark">Modo Oscuro</option>
-        </select>
-      </div>
-
       {/* Info */}
       <p className="text-sm text-gray-600">
         Tus preferencias se guardarán y se aplicarán al recargar la página.
