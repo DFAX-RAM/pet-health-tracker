@@ -2,4 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Aquí puedes agregar estilos globales adicionales */
+/* Opcional: fondo oscuro para el html o body */
+html.dark {
+  background-color: #1f2937; /* gray-800 */
+  color: #f9fafb;           /* gray-50 */
+}

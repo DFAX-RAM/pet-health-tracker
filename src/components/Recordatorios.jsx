@@ -3,14 +3,17 @@ import { AppContext } from '../context/AppContext';
 import { Trash2 } from 'lucide-react';
 
 export default function Recordatorios() {
-  const { recordatorios, setRecordatorios } = useContext(AppContext);
+  const { recordatorios, setRecordatorios, notificaciones } = useContext(AppContext);
   const [texto, setTexto] = useState('');
   const [fecha, setFecha] = useState('');
   const [categoria, setCategoria] = useState('vacuna');
   const intervalRef = useRef();
 
-  // Este useEffect para las alertas (móvil) podría moverse al AppContext
+  // Cargar de localStorage ya lo hace el AppContext
+
+  // Chequeo de alertas cada minuto
   useEffect(() => {
+    if (!notificaciones) return;
     intervalRef.current = setInterval(() => {
       const hoy = new Date().toDateString();
       recordatorios.forEach((r) => {
@@ -25,7 +28,7 @@ export default function Recordatorios() {
       });
     }, 60_000);
     return () => clearInterval(intervalRef.current);
-  }, [recordatorios, setRecordatorios]);
+  }, [recordatorios, setRecordatorios, notificaciones]);
 
   const handleAgregar = (e) => {
     e.preventDefault();
@@ -39,7 +42,6 @@ export default function Recordatorios() {
     setCategoria('vacuna');
   };
 
-  // Eliminar
   const handleEliminar = (id) =>
     setRecordatorios(recordatorios.filter((r) => r.id !== id));
 
@@ -114,6 +116,7 @@ export default function Recordatorios() {
                 <button
                   onClick={() => handleEliminar(r.id)}
                   className="text-red-500 hover:text-red-700 transition"
+                  aria-label="Eliminar recordatorio"
                 >
                   <Trash2 size={18} />
                 </button>

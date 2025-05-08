@@ -14,13 +14,18 @@ export default function Configuracion() {
     if (theme) setTema(theme);
   }, []);
 
-  // Guardar en localStorage
+  // Guardar notificaciones
   useEffect(() => {
     localStorage.setItem('pref_notif', JSON.stringify(notificaciones));
   }, [notificaciones]);
 
+  // Aplicar tema y guardar preferencia
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', tema === 'dark');
+    if (tema === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
     localStorage.setItem('pref_tema', tema);
   }, [tema]);
 
@@ -39,7 +44,9 @@ export default function Configuracion() {
             className="h-5 w-5"
           />
           <span>
-            {notificaciones ? 'Notificaciones activadas' : 'Notificaciones desactivadas'}
+            {notificaciones
+              ? 'Notificaciones activadas'
+              : 'Notificaciones desactivadas'}
           </span>
         </label>
       </div>
@@ -61,9 +68,9 @@ export default function Configuracion() {
         </select>
       </div>
 
-      {/* Información de ayuda */}
+      {/* Info */}
       <p className="text-sm text-gray-600">
-        Tus preferencias se guardarán automáticamente y se aplicarán al recargar la página.
+        Tus preferencias se guardarán y se aplicarán al recargar la página.
       </p>
     </div>
   );
