@@ -1,12 +1,35 @@
+// src/components/Informacion.jsx
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Search } from 'lucide-react'; // ← Aquí importas Search
 
-// Data de ejemplo de artículos
+// Data de ejemplo de artículos  
 const ARTICULOS = [
-  { id: 1, titulo: 'Alimentación saludable', categoria: 'Nutrición' },
-  { id: 2, titulo: 'Ejercicio diario', categoria: 'Salud' },
-  { id: 3, titulo: 'Cómo cepillar el pelaje', categoria: 'Cuidado' },
-  { id: 4, titulo: 'Viajar con tu mascota', categoria: 'Viajes' },
+  {
+    id: 1,
+    titulo: 'Alimentación saludable',
+    categoria: 'Nutrición',
+    contenido: `Una dieta equilibrada ayuda a tu mascota a mantenerse fuerte y saludable…`
+  },
+  {
+    id: 2,
+    titulo: 'Ejercicio diario',
+    categoria: 'Salud',
+    contenido: `El ejercicio regular contribuye a la salud cardiovascular…`
+  },
+  {
+    id: 3,
+    titulo: 'Cómo cepillar el pelaje',
+    categoria: 'Cuidado',
+    contenido: `Cepillar el pelaje diariamente previene nudos y reduce el pelo suelto…`
+  },
+  {
+    id: 4,
+    titulo: 'Viajar con tu mascota',
+    categoria: 'Viajes',
+    contenido: `Para un viaje seguro, asegúrate de llevar su collar con identificación…`
+  }
 ];
 
 export default function Informacion() {
@@ -15,7 +38,7 @@ export default function Informacion() {
 
   useEffect(() => {
     setFiltrados(
-      ARTICULOS.filter((a) =>
+      ARTICULOS.filter(a =>
         a.titulo.toLowerCase().includes(busqueda.toLowerCase())
       )
     );
@@ -31,23 +54,28 @@ export default function Informacion() {
           type="text"
           placeholder="Buscar artículo..."
           value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
+          onChange={e => setBusqueda(e.target.value)}
           className="flex-1 border p-2 rounded focus:ring focus:ring-indigo-200"
         />
-        <Search className="text-indigo-600" />
+        <button
+          onClick={() => {}}
+          className="p-2 text-indigo-600 hover:text-indigo-800 transition"
+          aria-label="Buscar"
+        >
+          <Search size={20} />
+        </button>
       </div>
 
       {/* Grid de artículos */}
       {filtrados.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filtrados.map((art) => (
-            <article
-              key={art.id}
-              className="p-4 border rounded-lg hover:shadow transition"
-            >
-              <h3 className="text-xl font-semibold mb-2">{art.titulo}</h3>
-              <p className="text-sm text-gray-500">Categoría: {art.categoria}</p>
-            </article>
+          {filtrados.map(art => (
+            <Link to={`/informacion/${art.id}`} key={art.id}>
+              <article className="p-4 border rounded-lg hover:shadow transition">
+                <h3 className="text-xl font-semibold mb-2">{art.titulo}</h3>
+                <p className="text-sm text-gray-500">Categoría: {art.categoria}</p>
+              </article>
+            </Link>
           ))}
         </div>
       ) : (
